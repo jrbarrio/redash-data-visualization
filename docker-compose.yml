@@ -8,7 +8,7 @@ services:
       - clickhouse
     # volumes:
     #   - /home/jorge/Projects/Personal/DataVisualization/redash-data:/app
-    env_file: /home/jorge/Projects/Personal/DataVisualization/env
+    env_file: ./env
     restart: always
     command: server
     ports:
@@ -19,7 +19,7 @@ services:
     image: redash/redash:7.0.0.b18042
     depends_on:
       - server
-    env_file: /home/jorge/Projects/Personal/DataVisualization/env
+    env_file: ./env
     restart: always
     command: scheduler
     environment:
@@ -29,7 +29,7 @@ services:
     image: redash/redash:7.0.0.b18042
     depends_on:
       - server
-    env_file: /home/jorge/Projects/Personal/DataVisualization/env
+    env_file: ./env
     restart: always
     command: worker
     environment:
@@ -39,7 +39,7 @@ services:
     image: redash/redash:7.0.0.b18042
     depends_on:
       - server
-    env_file: /home/jorge/Projects/Personal/DataVisualization/env
+    env_file: ./env
     restart: always
     command: worker
     environment:
@@ -49,9 +49,9 @@ services:
     image: redis:5.0.4-alpine
   postgres:
     image: postgres:11.2-alpine
-    env_file: /home/jorge/Projects/Personal/DataVisualization/env
+    env_file: ./env
     volumes:
-      - /home/jorge/Projects/Personal/DataVisualization/postgres-data:/var/lib/postgresql/data
+      - ./postgres-data:/var/lib/postgresql/data
     ports:
       - "15432:5432"
     command: "postgres -c fsync=off -c full_page_writes=off -c synchronous_commit=OFF"
@@ -59,6 +59,6 @@ services:
   clickhouse:
     image: yandex/clickhouse-server:19.4.3.11
     volumes:
-      - /home/jorge/Projects/Personal/DataVisualization/clickhouse-data:/var/lib/clickhouse
+      - ./clickhouse-data:/var/lib/clickhouse
     ports:
-     - "8123:8123"
+     - "18123:8123"
